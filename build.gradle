@@ -1,5 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath libs.build.gralde
+        classpath libs.kotlin.gradle
+        classpath libs.dagger.gradle
+        classpath libs.navigation.saveargs
+        classpath libs.design.support
+        classpath libs.gooogle.service
+        classpath libs.firebase.crashlytics.gradle
+    }
+}
+
 plugins {
-alias(libs.plugins.androidApplication) apply false
+    alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.kotlinAndroid) apply false
 }
