@@ -14,8 +14,3 @@ buildscript {
         classpath libs.firebase.crashlytics.gradle
     }
 }
-
-plugins {
-    alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.kotlinAndroid) apply false
-}
