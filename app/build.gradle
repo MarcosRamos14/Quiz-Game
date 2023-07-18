@@ -47,6 +47,8 @@ android {
 
 dependencies {
 
+    implementation(project(':core'))
+
     // AndroidX
     implementation libs.core.ktx
     implementation libs.appcompat
@@ -64,12 +66,6 @@ dependencies {
     implementation libs.firebase.crashlytics.lib
     implementation libs.firebase.analytics
 
-    // Gson
-    implementation libs.gson.code
-
-    // Javax Inject
-    implementation libs.javax.inject
-
     // Lifecycle
     implementation libs.lifecycle.viewmodel
     implementation libs.lifecycle.livedata
@@ -81,15 +77,6 @@ dependencies {
     // Navigation
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
-
-    // OkHttp
-    implementation platform(libs.okhttp.bom)
-    implementation libs.okhttp.squareup
-    implementation libs.okhttp.interceptor
-
-    // Retrofit
-    implementation libs.retrofit.squareup
-    implementation libs.retrofit.gson
 
     // Room
     implementation libs.room.ktx

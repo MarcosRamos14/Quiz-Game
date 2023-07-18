@@ -33,6 +33,7 @@ firebase-analytics = {group = "com.google.firebase", name = "firebase-analytics-
 javax-inject = {group = "javax.inject", name = "javax.inject", version.ref = "javax-inject-version"}
 shimmer-facebook = {group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer"}
 coroutines-android = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines"}
+coroutines-core = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines"}
 coroutines-test = {group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines"}
 gson-code = {group = "com.google.code.gson", name = "gson", version.ref = "gson"}
 room-ktx = {group = "androidx.room", name = "room-ktx", version.ref = "room-database"}

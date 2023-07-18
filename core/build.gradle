@@ -1,0 +1,31 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+    id 'kotlin'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+
+    // Coroutines
+    api libs.coroutines.core
+
+    // Gson
+    implementation libs.gson.code
+
+    // Javax Inject
+    implementation libs.javax.inject
+
+    // OkHttp
+    api platform(libs.okhttp.bom)
+    api libs.okhttp.squareup
+    api libs.okhttp.interceptor
+
+    // Retrofit
+    api libs.retrofit.squareup
+    api libs.retrofit.gson
+}
