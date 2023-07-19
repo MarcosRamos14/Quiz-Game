@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Quiz Game</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Home -->
+    <string name="home_screen_title">Home</string>
 </resources>
