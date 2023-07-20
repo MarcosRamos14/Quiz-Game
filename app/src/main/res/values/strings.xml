@@ -11,6 +11,9 @@
     <string name="dialog_hint_nick_name">Nick name</string>
     <string name="dialog_text_message">Enter your nick name to start the game</string>
 
+    <string name="dialog_btn_confirm">Continuar no jogo</string>
+    <string name="dialog_btn_cancel">Sair do jogo</string>
+
     <!-- Home -->
     <string name="home_screen_title">Home</string>
     <string name="home_text_play">Play</string>
@@ -18,5 +21,8 @@
     <string name="home_text_header_position">Position</string>
     <string name="home_text_header_player">Player name</string>
     <string name="home_text_header_score">Score</string>
+
+    <!-- Quiz -->
+    <string name="quiz_screen_title">Quiz</string>
 
 </resources>
