@@ -2,6 +2,7 @@ package com.example.quizgame.ui.quiz
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.example.core.domain.model.QuestionDTO
 import com.example.quizgame.ui.quiz.QuizAdapterItem.Companion.diff
 
 class QuizAdapter : ListAdapter<QuizAdapterItem, BaseQuizViewHolder>(diff) {
@@ -20,5 +21,14 @@ class QuizAdapter : ListAdapter<QuizAdapterItem, BaseQuizViewHolder>(diff) {
 
     override fun getItemViewType(position: Int): Int {
         return getItem(position).viewType
+    }
+
+    fun submitQuestion(question: QuestionDTO) {
+        QuizAdapterItem.QuizQuestion(question)
+        submitList(
+            listOf(
+                QuizAdapterItem.QuizQuestion(question)
+            )
+        )
     }
 }

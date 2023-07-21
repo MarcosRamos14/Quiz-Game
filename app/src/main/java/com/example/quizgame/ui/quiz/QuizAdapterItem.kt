@@ -10,8 +10,7 @@ sealed class QuizAdapterItem {
     abstract val viewType: Int
 
     data class QuizQuestion(
-        val question: QuestionDTO,
-        val showDivider: Boolean
+        val question: QuestionDTO
         ) : QuizAdapterItem() {
         override val diffId: String get() = question.id.toString()
         override val viewType: Int get() = QUESTION_TYPE
