@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/homeFragment">
+
+    <action
+        android:id="@+id/action_to_dialogInputFragment"
+        app:destination="@id/dialogFragment" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.quizgame.ui.home.HomeFragment"
+        android:label="@string/home_screen_title"
+        tools:layout="@layout/fragment_home"/>
+    <dialog
+        android:id="@+id/dialogFragment"
+        android:name="com.example.quizgame.ui.dialog.InputNameDialogFragment"
+        android:label="@string/dialog_screen_title"
+        tools:layout="@layout/fragment_dialog" >
+        <action
+            android:id="@+id/action_dialogFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.quizgame.ui.quiz.QuizFragment"
+        android:label="@string/quiz_screen_title"
+        tools:layout="@layout/fragment_quiz" >
+        <action
+            android:id="@+id/action_quizFragment_to_chooseOptionDialogFragment"
+            app:destination="@id/chooseOptionDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/chooseOptionDialogFragment"
+        android:name="com.example.quizgame.ui.dialog.ChooseOptionDialogFragment"
+        android:label="ChooseOptionDialogFragment" >
+    </dialog>
+</navigation>
