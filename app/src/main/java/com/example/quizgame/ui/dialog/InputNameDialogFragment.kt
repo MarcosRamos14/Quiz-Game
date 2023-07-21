@@ -6,6 +6,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.example.quizgame.R
 import com.example.quizgame.databinding.FragmentDialogBinding
+import com.example.quizgame.ui.extensions.showShortToast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class InputNameDialogFragment : BottomSheetDialogFragment(R.layout.fragment_dialog) {
@@ -25,8 +26,14 @@ class InputNameDialogFragment : BottomSheetDialogFragment(R.layout.fragment_dial
     }
 
     private fun setupListener() {
-        binding.btnPlay.setOnClickListener {
-            findNavController().navigate(R.id.action_dialogFragment_to_quizFragment)
+        with(binding) {
+            btnPlay.setOnClickListener {
+                if (editNickName.text.toString().isEmpty()) {
+                    showShortToast(R.string.warning_toast_nickname)
+                } else {
+                    findNavController().navigate(R.id.action_dialogFragment_to_quizFragment)
+                }
+            }
         }
     }
 }
