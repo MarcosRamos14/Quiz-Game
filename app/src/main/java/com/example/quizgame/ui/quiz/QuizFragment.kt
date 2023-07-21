@@ -35,15 +35,6 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentQuizBinding.bind(view)
         observerQuestionUiState()
-
-        quizAdapter.submitList(
-            listOf(
-                QuizAdapterItem.QuizAnswer(AnswerDTO("1", "Question 1")),
-                QuizAdapterItem.QuizAnswer(AnswerDTO("1", "Question 2")),
-                QuizAdapterItem.QuizAnswer(AnswerDTO("1", "Question 3")),
-                QuizAdapterItem.QuizAnswer(AnswerDTO("1", "Question 4"))
-            )
-        )
     }
 
     private fun observerQuestionUiState() {

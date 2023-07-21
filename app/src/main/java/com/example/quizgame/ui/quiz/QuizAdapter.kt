@@ -24,11 +24,11 @@ class QuizAdapter : ListAdapter<QuizAdapterItem, BaseQuizViewHolder>(diff) {
     }
 
     fun submitQuestion(question: QuestionDTO) {
-        QuizAdapterItem.QuizQuestion(question)
-        submitList(
-            listOf(
-                QuizAdapterItem.QuizQuestion(question)
-            )
-        )
+        val items = mutableListOf<QuizAdapterItem>()
+        items.add(QuizAdapterItem.QuizQuestion(question))
+        question.answerOptions?.forEach {
+            items.add(QuizAdapterItem.QuizAnswer(it))
+        }
+        submitList(items)
     }
 }

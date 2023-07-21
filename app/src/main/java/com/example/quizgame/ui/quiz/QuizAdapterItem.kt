@@ -1,7 +1,6 @@
 package com.example.quizgame.ui.quiz
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.core.domain.model.AnswerDTO
 import com.example.core.domain.model.QuestionDTO
 
 sealed class QuizAdapterItem {
@@ -16,8 +15,8 @@ sealed class QuizAdapterItem {
         override val viewType: Int get() = QUESTION_TYPE
     }
 
-    data class QuizAnswer(val answer: AnswerDTO) : QuizAdapterItem() {
-        override val diffId: String get() = answer.id.toString()
+    data class QuizAnswer(val answer: String) : QuizAdapterItem() {
+        override val diffId: String get() = answer
         override val viewType: Int get() = ANSWER_TYPE
     }
 

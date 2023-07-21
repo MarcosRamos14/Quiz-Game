@@ -12,7 +12,7 @@ class QuizAnswerViewHolder(
 
     override fun bind(item: QuizAdapterItem) {
         (item as? QuizAdapterItem.QuizAnswer)?.let {
-             textAnswer.text = it.answer.answer
+             textAnswer.text = it.answer
         }
     }
 
