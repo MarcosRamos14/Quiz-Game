@@ -1,6 +1,6 @@
 package com.example.core.domain.model
 
 data class AnswerDTO(
-    val id: Int?,
+    val id: String?,
     val answer: String?
 )
