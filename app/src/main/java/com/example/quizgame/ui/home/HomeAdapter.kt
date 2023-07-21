@@ -1,13 +1,13 @@
 package com.example.quizgame.ui.home
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import com.example.quizgame.ui.home.HomeAdapterItem.Companion.GAME_TYPE
 import com.example.quizgame.ui.home.HomeAdapterItem.Companion.HEADER_TYPE
 import com.example.quizgame.ui.home.HomeAdapterItem.Companion.diff
 import java.lang.Exception
 
-class HomeAdapter(
-) : androidx.recyclerview.widget.ListAdapter<HomeAdapterItem, BaseHomeViewHolder>(diff) {
+class HomeAdapter : ListAdapter<HomeAdapterItem, BaseHomeViewHolder>(diff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHomeViewHolder {
         return when (viewType) {
