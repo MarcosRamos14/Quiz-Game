@@ -1,7 +1,7 @@
 package com.example.quizgame.framework.di
 
-import com.example.core.data.repository.QuestionRepository
-import com.example.quizgame.framework.repositoryImpl.QuestionRepositoryImpl
+import com.example.core.data.repository.QuestionAnswerRepository
+import com.example.quizgame.framework.repositoryImpl.QuestionAnswerAnswerRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import dagger.hilt.components.SingletonComponent
 interface RepositoryModule {
 
     @Binds
-    fun bindQuestionRepository(repository: QuestionRepositoryImpl) : QuestionRepository
+    fun bindQuestionRepository(repository: QuestionAnswerAnswerRepositoryImpl) : QuestionAnswerRepository
 }

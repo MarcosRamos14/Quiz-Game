@@ -1,6 +1,6 @@
 package com.example.quizgame.framework.network
 
-import com.example.quizgame.framework.network.response.AnswerBodyResponseDTO
+import com.example.quizgame.framework.network.response.AnswerRequestDTO
 import com.example.quizgame.framework.network.response.AnswerResultResponseDTO
 import com.example.quizgame.framework.network.response.QuestionResponseDTO
 import retrofit2.http.Body
@@ -16,6 +16,6 @@ interface QuizApi {
     @POST("/answer")
     suspend fun submitAnswer(
         @Query("questionId") questionId: String,
-        @Body answerBodyResponseDTO: AnswerBodyResponseDTO
+        @Body answerRequestDTO: AnswerRequestDTO
     ): AnswerResultResponseDTO
 }
