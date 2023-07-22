@@ -24,6 +24,10 @@ class QuizViewModel @Inject constructor(
 
     private var question: QuestionDTO? = null
 
+    private val _isAnswerSelected = MutableLiveData(false)
+    val isAnswerSelected: LiveData<Boolean>
+        get() = _isAnswerSelected
+
     private val actionQuestion = MutableLiveData<ActionQuestion>()
     val stateQuestion: LiveData<UiStateQuestion> = actionQuestion.switchMap {
         liveData(coroutineDispatchers.io()) {
@@ -76,7 +80,16 @@ class QuizViewModel @Inject constructor(
     }
 
     fun submitAnswer(answer: String) {
-        actionAnswer.value = ActionAnswer.Submit(question?.id.toString(), answer)
+        _isAnswerSelected.value?.let { isAnswerSelected ->
+            if (!isAnswerSelected) {
+                actionAnswer.value = ActionAnswer.Submit(question?.id.toString(), answer)
+                _isAnswerSelected.value = true
+            }
+        }
+    }
+
+    fun clearAnswerState() {
+        _isAnswerSelected.value = false
     }
 
     sealed class UiStateQuestion {
@@ -94,7 +107,7 @@ class QuizViewModel @Inject constructor(
         data class Success(
             val answerResult: AnswerResultDTO,
             val question: QuestionDTO
-            ) : UiStateAnswer()
+        ) : UiStateAnswer()
         object Error : UiStateAnswer()
     }
 

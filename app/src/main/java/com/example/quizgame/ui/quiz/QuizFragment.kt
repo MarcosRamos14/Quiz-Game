@@ -34,14 +34,18 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentQuizBinding.bind(view)
+        setupListener()
         observerQuestionUiState()
         observerAnswerUiState()
-        setupListener()
+        observerAnswerSelected()
     }
 
     private fun setupListener() {
-        binding.btnAnswer.setOnClickListener {
-            viewModel.getQuestion()
+        binding.btnNext.setOnClickListener {
+            with(viewModel) {
+                getQuestion()
+                clearAnswerState()
+            }
         }
     }
 
@@ -71,6 +75,12 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
                 }
                 QuizViewModel.UiStateAnswer.Error -> FLIPPER_CHILD_POSITION_ERROR
             }
+        }
+    }
+
+    private fun observerAnswerSelected() {
+        viewModel.isAnswerSelected.observe(viewLifecycleOwner) { isSelected ->
+            binding.btnNext.visibility = if (isSelected) View.VISIBLE else View.GONE
         }
     }
 

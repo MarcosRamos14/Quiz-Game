@@ -10,7 +10,7 @@
         android:id="@+id/text_question"
         style="@style/TextAppearance.MaterialComponents.Body1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_68dp"
+        android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/_16sp"
