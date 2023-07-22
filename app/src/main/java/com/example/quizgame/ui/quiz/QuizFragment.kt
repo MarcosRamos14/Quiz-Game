@@ -7,8 +7,6 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.core.domain.model.AnswerDTO
-import com.example.core.domain.model.QuestionDTO
 import com.example.quizgame.R
 import com.example.quizgame.databinding.FragmentQuizBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +17,9 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     private lateinit var binding: FragmentQuizBinding
     private val viewModel: QuizViewModel by viewModels()
     private val quizAdapter: QuizAdapter by lazy {
-        val quizAdapter = QuizAdapter()
+        val quizAdapter = QuizAdapter { selectedItem ->
+            viewModel.submitAnswer(selectedItem)
+        }
         binding.recyclerQuiz.adapter = quizAdapter
         return@lazy quizAdapter
     }
@@ -35,22 +35,41 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentQuizBinding.bind(view)
         observerQuestionUiState()
+        observerAnswerUiState()
+        setupListener()
+    }
+
+    private fun setupListener() {
+        binding.btnAnswer.setOnClickListener {
+            viewModel.getQuestion()
+        }
     }
 
     private fun observerQuestionUiState() {
         with(viewModel) {
             getQuestion()
-            state.observe(viewLifecycleOwner) { uiState ->
+            stateQuestion.observe(viewLifecycleOwner) { uiState ->
                 when (uiState) {
-                    QuizViewModel.UiState.Loading -> FLIPPER_POSITION_LOADING
-
-                    is QuizViewModel.UiState.Success -> {
+                    QuizViewModel.UiStateQuestion.Loading -> FLIPPER_POSITION_LOADING
+                    is QuizViewModel.UiStateQuestion.Success -> {
                         quizAdapter.submitQuestion(uiState.question)
                         FLIPPER_CHILD_POSITION_SUCCESS
                     }
-
-                    QuizViewModel.UiState.Error -> FLIPPER_CHILD_POSITION_ERROR
+                    QuizViewModel.UiStateQuestion.Error -> FLIPPER_CHILD_POSITION_ERROR
                 }
+            }
+        }
+    }
+
+    private fun observerAnswerUiState() {
+        viewModel.stateAnswer.observe(viewLifecycleOwner) { uiState ->
+            when (uiState) {
+                QuizViewModel.UiStateAnswer.Loading -> FLIPPER_POSITION_LOADING
+                is QuizViewModel.UiStateAnswer.Success -> {
+                    quizAdapter.submitQuestion(uiState.question, uiState.answerResult)
+                    FLIPPER_CHILD_POSITION_SUCCESS
+                }
+                QuizViewModel.UiStateAnswer.Error -> FLIPPER_CHILD_POSITION_ERROR
             }
         }
     }

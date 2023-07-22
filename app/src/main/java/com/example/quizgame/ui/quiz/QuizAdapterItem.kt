@@ -1,5 +1,6 @@
 package com.example.quizgame.ui.quiz
 
+import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.DiffUtil
 import com.example.core.domain.model.QuestionDTO
 
@@ -8,6 +9,11 @@ sealed class QuizAdapterItem {
     abstract val diffId: String
     abstract val viewType: Int
 
+    data class QuizCounter(val counter: Int) : QuizAdapterItem() {
+        override val diffId: String get() = counter.toString()
+        override val viewType: Int get() = COUNTER_TYPE
+    }
+
     data class QuizQuestion(
         val question: QuestionDTO
         ) : QuizAdapterItem() {
@@ -15,14 +21,15 @@ sealed class QuizAdapterItem {
         override val viewType: Int get() = QUESTION_TYPE
     }
 
-    data class QuizAnswer(val answer: String) : QuizAdapterItem() {
-        override val diffId: String get() = answer
+    data class QuizAnswer(val answer: String, @ColorRes val correctColor: Int?) : QuizAdapterItem() {
+        override val diffId: String get() = answer + correctColor.toString()
         override val viewType: Int get() = ANSWER_TYPE
     }
 
     companion object {
-        const val QUESTION_TYPE = 0
-        const val ANSWER_TYPE = 1
+        const val COUNTER_TYPE = 0
+        const val QUESTION_TYPE = 1
+        const val ANSWER_TYPE = 2
 
         val diff = object : DiffUtil.ItemCallback<QuizAdapterItem>() {
             override fun areItemsTheSame(

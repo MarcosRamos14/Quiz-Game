@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import com.example.core.domain.model.AnswerResultDTO
 import com.example.core.domain.model.QuestionDTO
 import com.example.core.usecase.GetQuestionUseCase
+import com.example.core.usecase.PostAnswerUseCase
+import com.example.core.usecase.PostAnswerUseCase.PostAnswerUseCaseParams
 import com.example.core.usecase.base.CoroutinesDispatchers
 import com.example.quizgame.ui.extensions.watchStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,23 +18,52 @@ import javax.inject.Inject
 @HiltViewModel
 class QuizViewModel @Inject constructor(
     private val coroutineDispatchers: CoroutinesDispatchers,
-    private val getQuestionUseCase: GetQuestionUseCase
+    private val getQuestionUseCase: GetQuestionUseCase,
+    private val postAnswerUseCase: PostAnswerUseCase
 ) : ViewModel() {
 
-    private val action = MutableLiveData<Action>()
-    val state: LiveData<UiState> = action.switchMap {
+    private var question: QuestionDTO? = null
+
+    private val actionQuestion = MutableLiveData<ActionQuestion>()
+    val stateQuestion: LiveData<UiStateQuestion> = actionQuestion.switchMap {
         liveData(coroutineDispatchers.io()) {
             when (it) {
-                Action.Load -> {
+                ActionQuestion.Load -> {
                     getQuestionUseCase().watchStatus(
                         loading = {
-                            emit(UiState.Loading)
+                            emit(UiStateQuestion.Loading)
                         },
                         success = { question ->
-                            emit(UiState.Success(question))
+                            this@QuizViewModel.question = question
+                            emit(UiStateQuestion.Success(question))
                         },
                         error = {
-                            emit(UiState.Error)
+                            emit(UiStateQuestion.Error)
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    private val actionAnswer = MutableLiveData<ActionAnswer>()
+    val stateAnswer: LiveData<UiStateAnswer> = actionAnswer.switchMap {
+        liveData(coroutineDispatchers.io()) {
+            when (it) {
+                is ActionAnswer.Submit -> {
+                    postAnswerUseCase(
+                        PostAnswerUseCaseParams(it.questionId, it.answer)
+                    ).watchStatus(
+                        loading = {
+                            emit(UiStateAnswer.Loading)
+                        },
+                        success = { answerResult ->
+                            question?.let { question ->
+                                emit(UiStateAnswer.Success(answerResult, question))
+                            }
+                        },
+                        error = {
+                            emit(UiStateAnswer.Error)
                         }
                     )
                 }
@@ -40,16 +72,33 @@ class QuizViewModel @Inject constructor(
     }
 
     fun getQuestion() {
-        action.value = Action.Load
+        actionQuestion.value = ActionQuestion.Load
     }
 
-    sealed class UiState {
-        object Loading : UiState()
-        data class Success(val question: QuestionDTO) : UiState()
-        object Error : UiState()
+    fun submitAnswer(answer: String) {
+        actionAnswer.value = ActionAnswer.Submit(question?.id.toString(), answer)
     }
 
-    sealed class Action {
-        object Load : Action()
+    sealed class UiStateQuestion {
+        object Loading : UiStateQuestion()
+        data class Success(val question: QuestionDTO) : UiStateQuestion()
+        object Error : UiStateQuestion()
+    }
+
+    sealed class ActionQuestion {
+        object Load : ActionQuestion()
+    }
+
+    sealed class UiStateAnswer {
+        object Loading : UiStateAnswer()
+        data class Success(
+            val answerResult: AnswerResultDTO,
+            val question: QuestionDTO
+            ) : UiStateAnswer()
+        object Error : UiStateAnswer()
+    }
+
+    sealed class ActionAnswer {
+        data class Submit(val questionId: String, val answer: String) : ActionAnswer()
     }
 }
