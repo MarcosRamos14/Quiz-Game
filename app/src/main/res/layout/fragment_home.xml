@@ -57,7 +57,7 @@
     <Button
         android:id="@+id/btn_play"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_64dp"
+        android:layout_height="@dimen/_68dp"
         android:layout_marginHorizontal="@dimen/_16dp"
         android:layout_marginVertical="@dimen/_8dp"
         android:backgroundTint="@color/app_blue"

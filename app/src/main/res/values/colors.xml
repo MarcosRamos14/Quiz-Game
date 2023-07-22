@@ -6,5 +6,7 @@
 
     <!-- App colors -->
     <color name="app_blue">#35A7E3</color>
+    <color name="quiz_option_green">#BDDB0B</color>
+    <color name="quiz_option_red">#FF5436</color>
 
 </resources>

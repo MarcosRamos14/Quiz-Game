@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.core.domain.model.AnswerDTO
-import com.example.core.domain.model.QuestionDTO
 import com.example.quizgame.R
 import com.example.quizgame.databinding.FragmentQuizBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,8 +15,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class QuizFragment : Fragment(R.layout.fragment_quiz) {
 
     private lateinit var binding: FragmentQuizBinding
+    private val viewModel: QuizViewModel by viewModels()
     private val quizAdapter: QuizAdapter by lazy {
-        val quizAdapter = QuizAdapter()
+        val quizAdapter = QuizAdapter { selectedItem ->
+            viewModel.submitAnswer(selectedItem)
+        }
         binding.recyclerQuiz.adapter = quizAdapter
         return@lazy quizAdapter
     }
@@ -32,15 +34,59 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentQuizBinding.bind(view)
+        setupListener()
+        observerQuestionUiState()
+        observerAnswerUiState()
+        observerAnswerSelected()
+    }
 
-        quizAdapter.submitList(
-            listOf(
-                QuizAdapterItem.QuizQuestion(QuestionDTO(0, "We achieved ?"), true),
-                QuizAdapterItem.QuizAnswer(AnswerDTO(1, "Question 1")),
-                QuizAdapterItem.QuizAnswer(AnswerDTO(1, "Question 2")),
-                QuizAdapterItem.QuizAnswer(AnswerDTO(1, "Question 3")),
-                QuizAdapterItem.QuizAnswer(AnswerDTO(1, "Question 4"))
-            )
-        )
+    private fun setupListener() {
+        binding.btnNext.setOnClickListener {
+            with(viewModel) {
+                getQuestion()
+                clearAnswerState()
+            }
+        }
+    }
+
+    private fun observerQuestionUiState() {
+        with(viewModel) {
+            getQuestion()
+            stateQuestion.observe(viewLifecycleOwner) { uiState ->
+                when (uiState) {
+                    QuizViewModel.UiStateQuestion.Loading -> FLIPPER_POSITION_LOADING
+                    is QuizViewModel.UiStateQuestion.Success -> {
+                        quizAdapter.submitQuestion(uiState.question)
+                        FLIPPER_CHILD_POSITION_SUCCESS
+                    }
+                    QuizViewModel.UiStateQuestion.Error -> FLIPPER_CHILD_POSITION_ERROR
+                }
+            }
+        }
+    }
+
+    private fun observerAnswerUiState() {
+        viewModel.stateAnswer.observe(viewLifecycleOwner) { uiState ->
+            when (uiState) {
+                QuizViewModel.UiStateAnswer.Loading -> FLIPPER_POSITION_LOADING
+                is QuizViewModel.UiStateAnswer.Success -> {
+                    quizAdapter.submitQuestion(uiState.question, uiState.answerResult)
+                    FLIPPER_CHILD_POSITION_SUCCESS
+                }
+                QuizViewModel.UiStateAnswer.Error -> FLIPPER_CHILD_POSITION_ERROR
+            }
+        }
+    }
+
+    private fun observerAnswerSelected() {
+        viewModel.isAnswerSelected.observe(viewLifecycleOwner) { isSelected ->
+            binding.btnNext.visibility = if (isSelected) View.VISIBLE else View.GONE
+        }
+    }
+
+    companion object {
+        private const val FLIPPER_POSITION_LOADING = 0
+        private const val FLIPPER_CHILD_POSITION_SUCCESS = 1
+        private const val FLIPPER_CHILD_POSITION_ERROR = 2
     }
 }

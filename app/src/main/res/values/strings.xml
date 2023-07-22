@@ -24,7 +24,7 @@
 
     <!-- Quiz -->
     <string name="quiz_screen_title">Quiz</string>
-    <string name="quiz_btn_answer">Answer</string>
+    <string name="quiz_btn_next">Next</string>
 
     <!-- Warning -->
     <string name="warning_toast_nickname">Enter your nickname to play</string>

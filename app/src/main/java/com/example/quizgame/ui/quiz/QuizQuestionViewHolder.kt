@@ -12,7 +12,6 @@ class QuizQuestionViewHolder(
 
     override fun bind(item: QuizAdapterItem) {
         (item as? QuizAdapterItem.QuizQuestion)?.let {
-            it.showDivider
             textQuestion.text = it.question.question
         }
     }
