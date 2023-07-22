@@ -23,6 +23,7 @@ class QuizViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var question: QuestionDTO? = null
+    private var requestCounter: Int = 0
 
     private val _isAnswerSelected = MutableLiveData(false)
     val isAnswerSelected: LiveData<Boolean>
@@ -33,18 +34,21 @@ class QuizViewModel @Inject constructor(
         liveData(coroutineDispatchers.io()) {
             when (it) {
                 ActionQuestion.Load -> {
-                    getQuestionUseCase().watchStatus(
-                        loading = {
-                            emit(UiStateQuestion.Loading)
-                        },
-                        success = { question ->
-                            this@QuizViewModel.question = question
-                            emit(UiStateQuestion.Success(question))
-                        },
-                        error = {
-                            emit(UiStateQuestion.Error)
-                        }
-                    )
+                    if (requestCounter < MAX_REQUEST) {
+                        getQuestionUseCase().watchStatus(
+                            loading = {
+                                emit(UiStateQuestion.Loading)
+                            },
+                            success = { question ->
+                                this@QuizViewModel.question = question
+                                emit(UiStateQuestion.Success(question))
+                                requestCounter++
+                            },
+                            error = {
+                                emit(UiStateQuestion.Error)
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -113,5 +117,9 @@ class QuizViewModel @Inject constructor(
 
     sealed class ActionAnswer {
         data class Submit(val questionId: String, val answer: String) : ActionAnswer()
+    }
+
+    companion object {
+        private const val MAX_REQUEST = 10
     }
 }
