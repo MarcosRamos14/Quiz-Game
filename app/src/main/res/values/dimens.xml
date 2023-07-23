@@ -10,6 +10,7 @@
     <dimen name="_40dp">40dp</dimen>
     <dimen name="_48dp">48dp</dimen>
     <dimen name="_68dp">68dp</dimen>
+    <dimen name="_100dp">100dp</dimen>
 
     <!-- SP -->
     <dimen name="_8sp">8sp</dimen>

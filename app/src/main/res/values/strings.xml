@@ -6,6 +6,7 @@
 
     <!-- Dialog -->
     <string name="dialog_screen_title">Dialog Nickname</string>
+    <string name="dialog_screen_title_choose_option">Choose Option Dialog Fragment</string>
     <string name="dialog_text_title">Warning</string>
     <string name="dialog_text_button">Play</string>
     <string name="dialog_hint_nick_name">Nick name</string>
@@ -13,6 +14,9 @@
 
     <string name="dialog_btn_confirm">Continue in game</string>
     <string name="dialog_btn_cancel">Leave the game</string>
+
+    <!-- Splash -->
+    <string name="splash_screen_title">Fragment splash</string>
 
     <!-- Home -->
     <string name="home_screen_title">Home</string>
