@@ -16,11 +16,23 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
     private lateinit var binding: FragmentResultBinding
     private val viewModel: QuizViewModel by viewModels()
+    private val args: ResultFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentResultBinding.bind(view)
+        setView()
         setListeners()
+    }
+
+    private fun setView() {
+        val correctAnswers = args.correctAnswers
+        val incorrectAnswers = args.incorrectAnswers
+
+        with(binding) {
+            textResultHits.text = getString(R.string.result_text_total_hits, correctAnswers)
+            textResultErrors.text = getString(R.string.result_text_total_hits, incorrectAnswers)
+        }
     }
 
     private fun setListeners() {
