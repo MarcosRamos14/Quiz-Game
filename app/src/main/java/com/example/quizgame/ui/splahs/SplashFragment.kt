@@ -3,32 +3,23 @@ package com.example.quizgame.ui.splahs
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.quizgame.R
 import com.example.quizgame.databinding.FragmentSplashBinding
-import net.bytebuddy.asm.Advice.This
 
-class SplashFragment : Fragment() {
+class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private lateinit var binding: FragmentSplashBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) = FragmentSplashBinding.inflate(inflater, container, false).apply {
-        binding = this
-    }.root
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Handler(Looper.getMainLooper()).postDelayed(this::navigation, TIME)
-    }
+        binding = FragmentSplashBinding.bind(view)
 
-    private fun navigation() {
-
+        Handler(Looper.getMainLooper()).postDelayed({
+            findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+        }, TIME)
     }
 
     companion object {
