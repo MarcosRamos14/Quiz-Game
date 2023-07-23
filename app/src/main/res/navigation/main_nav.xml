@@ -43,11 +43,23 @@
         <action
             android:id="@+id/action_quizFragment_to_chooseOptionDialogFragment"
             app:destination="@id/chooseOptionDialogFragment" />
+        <action
+            android:id="@+id/action_quizFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
     <dialog
         android:id="@+id/chooseOptionDialogFragment"
         android:name="com.example.quizgame.ui.dialog.ChooseOptionDialogFragment"
         android:label="@string/dialog_screen_title_choose_option" >
     </dialog>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.example.quizgame.ui.result.ResultFragment"
+        android:label="@string/result_screen_title"
+        tools:layout="@layout/fragment_result" >
+        <action
+            android:id="@+id/action_resultFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
+    </fragment>
 
 </navigation>

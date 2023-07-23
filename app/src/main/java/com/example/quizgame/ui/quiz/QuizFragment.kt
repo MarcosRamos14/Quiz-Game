@@ -43,8 +43,13 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     private fun setupListener() {
         binding.btnNext.setOnClickListener {
             with(viewModel) {
-                getQuestion()
-                clearAnswerState()
+                if (isGameFinished.value == true) {
+                    navigateToResultIfGameFinished()
+                } else {
+                    getQuestion()
+                    clearAnswerState()
+                }
+
             }
         }
     }
@@ -80,7 +85,21 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
 
     private fun observerAnswerSelected() {
         viewModel.isAnswerSelected.observe(viewLifecycleOwner) { isSelected ->
-            binding.btnNext.visibility = if (isSelected) View.VISIBLE else View.GONE
+            with(binding.btnNext) {
+                visibility = if (isSelected) View.VISIBLE else View.GONE
+                if (isSelected) {
+                    if (viewModel.isGameFinished.value == true) {
+                        visibility = View.VISIBLE
+                        navigateToResultIfGameFinished()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun navigateToResultIfGameFinished() {
+        if (viewModel.isGameFinished.value == true) {
+            findNavController().navigate(R.id.action_quizFragment_to_resultFragment)
         }
     }
 
