@@ -26,6 +26,8 @@ class QuizViewModel @Inject constructor(
 
     private var question: QuestionDTO? = null
     private var requestCounter: Int = 0
+    private var correctAnswersCount: Int = 0
+    private var incorrectAnswersCount: Int = 0
     private var totalQuestionsCount = 0
 
     private val _isAnswerSelected = MutableLiveData(false)
@@ -108,11 +110,20 @@ class QuizViewModel @Inject constructor(
         viewModelScope.launch {
             answerResult.result?.let { result ->
                 totalQuestionsCount++
+                if (result) correctAnswersCount++ else incorrectAnswersCount++
                 if (totalQuestionsCount == MAX_REQUEST) {
                     _isGameFinished.postValue(true)
                 }
             }
         }
+    }
+
+    fun getCorrectAnswersCount(): Int {
+        return correctAnswersCount
+    }
+
+    fun getIncorrectAnswersCount(): Int {
+        return incorrectAnswersCount
     }
 
     fun resetGame() {

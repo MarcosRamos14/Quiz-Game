@@ -60,6 +60,12 @@
         <action
             android:id="@+id/action_resultFragment_to_quizFragment"
             app:destination="@id/quizFragment" />
+        <argument
+            android:name="correctAnswers"
+            app:argType="integer" />
+        <argument
+            android:name="incorrectAnswers"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

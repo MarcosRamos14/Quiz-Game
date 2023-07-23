@@ -99,7 +99,10 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
 
     private fun navigateToResultIfGameFinished() {
         if (viewModel.isGameFinished.value == true) {
-            findNavController().navigate(R.id.action_quizFragment_to_resultFragment)
+            val correctAnswers = viewModel.getCorrectAnswersCount()
+            val incorrectAnswers = viewModel.getIncorrectAnswersCount()
+            val action = QuizFragmentDirections.actionQuizFragmentToResultFragment(correctAnswers, incorrectAnswers)
+            findNavController().navigate(action)
         }
     }
 
