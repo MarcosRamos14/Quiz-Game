@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.example.core.domain.model.AnswerResultDTO
 import com.example.core.domain.model.QuestionDTO
 import com.example.core.usecase.GetQuestionUseCase
@@ -13,6 +14,7 @@ import com.example.core.usecase.PostAnswerUseCase.PostAnswerUseCaseParams
 import com.example.core.usecase.base.CoroutinesDispatchers
 import com.example.quizgame.ui.extensions.watchStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,10 +26,15 @@ class QuizViewModel @Inject constructor(
 
     private var question: QuestionDTO? = null
     private var requestCounter: Int = 0
+    private var totalQuestionsCount = 0
 
     private val _isAnswerSelected = MutableLiveData(false)
     val isAnswerSelected: LiveData<Boolean>
         get() = _isAnswerSelected
+
+    private val _isGameFinished = MutableLiveData(false)
+    val isGameFinished: LiveData<Boolean>
+        get() = _isGameFinished
 
     private val actionQuestion = MutableLiveData<ActionQuestion>()
     val stateQuestion: LiveData<UiStateQuestion> = actionQuestion.switchMap {
@@ -68,6 +75,7 @@ class QuizViewModel @Inject constructor(
                         success = { answerResult ->
                             question?.let { question ->
                                 emit(UiStateAnswer.Success(answerResult, question))
+                                processAnswerResult(answerResult)
                             }
                         },
                         error = {
@@ -94,6 +102,23 @@ class QuizViewModel @Inject constructor(
 
     fun clearAnswerState() {
         _isAnswerSelected.value = false
+    }
+
+    private fun processAnswerResult(answerResult: AnswerResultDTO) {
+        viewModelScope.launch {
+            answerResult.result?.let { result ->
+                totalQuestionsCount++
+                if (totalQuestionsCount == MAX_REQUEST) {
+                    _isGameFinished.postValue(true)
+                }
+            }
+        }
+    }
+
+    fun resetGame() {
+        totalQuestionsCount = 0
+        requestCounter = 0
+        getQuestion()
     }
 
     sealed class UiStateQuestion {
