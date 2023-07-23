@@ -16,7 +16,7 @@
     <string name="dialog_btn_cancel">Leave the game</string>
 
     <!-- Splash -->
-    <string name="splash_screen_title">Fragment splash</string>
+    <string name="splash_screen_title">Splash</string>
 
     <!-- Home -->
     <string name="home_screen_title">Home</string>
@@ -29,6 +29,14 @@
     <!-- Quiz -->
     <string name="quiz_screen_title">Quiz</string>
     <string name="quiz_btn_next">Next</string>
+
+    <!-- Result -->
+    <string name="result_screen_title">Result</string>
+    <string name="result_text_title">Game Result</string>
+    <string name="result_text_total_hits">Hits total hits were: %1$d</string>
+    <string name="result_text_total_errors">Your total errors were: %1$d</string>
+    <string name="result_btn_restart">Restart game</string>
+    <string name="result_btn_conclude">Finish Game</string>
 
     <!-- Warning -->
     <string name="warning_toast_nickname">Enter your nickname to play</string>
