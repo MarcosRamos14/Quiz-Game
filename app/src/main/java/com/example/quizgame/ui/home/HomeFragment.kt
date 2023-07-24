@@ -24,19 +24,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding = FragmentHomeBinding.bind(view)
         setupListener()
 
-        homeAdapter.submitList(
-            listOf(
-                HomeAdapterItem.GameHeader("Rankin", "aaa", "dd"),
-                HomeAdapterItem.GameItem(GameDTO(1, "Marcos", 32), 1,true),
-                HomeAdapterItem.GameItem(GameDTO(1, "Marcos", 32), 2,true),
-                HomeAdapterItem.GameItem(GameDTO(1, "Marcos", 32), 3, true),
-                HomeAdapterItem.GameItem(GameDTO(1, "Marcos", 32), 4, true),
-                HomeAdapterItem.GameItem(GameDTO(1, "Marcos", 32), 5, true),
-                HomeAdapterItem.GameItem(GameDTO(1, "Marcos", 32), 6, true),
-                HomeAdapterItem.GameItem(GameDTO(1, "Marcos", 32), 7, true),
-                HomeAdapterItem.GameItem(GameDTO(1, "Marcos", 32), 8, true)
-            )
-        )
+
     }
 
     private fun setupListener() {

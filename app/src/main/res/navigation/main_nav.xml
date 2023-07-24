@@ -61,11 +61,15 @@
             android:id="@+id/action_resultFragment_to_quizFragment"
             app:destination="@id/quizFragment" />
         <argument
-            android:name="correctAnswers"
-            app:argType="integer" />
-        <argument
-            android:name="incorrectAnswers"
-            app:argType="integer" />
+            android:name="resultViewArgs"
+            app:argType="com.example.quizgame.ui.result.ResultViewArgs" />
+        <action
+            android:id="@+id/action_resultFragment_to_saveGameDialogFragment"
+            app:destination="@id/saveGameDialogFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/saveGameDialogFragment"
+        android:name="com.example.quizgame.ui.dialog.SaveGameDialogFragment"
+        android:label="SaveGameDialogFragment" />
 
 </navigation>
