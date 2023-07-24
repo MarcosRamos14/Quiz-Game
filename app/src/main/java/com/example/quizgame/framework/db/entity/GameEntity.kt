@@ -18,7 +18,3 @@ data class GameEntity(
     @ColumnInfo(name = DbConstants.QUIZ_COLUMN_INFO_POSITION)
     val position: Int
 )
-
-fun List<GameEntity>.toGameModel() = map {
-    GameDTO(it.id, it.playerName, it.score, it.position)
-}

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.core.domain.model.GameDTO
 import com.example.quizgame.R
 import com.example.quizgame.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,8 +22,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         setupListener()
-
-
     }
 
     private fun setupListener() {

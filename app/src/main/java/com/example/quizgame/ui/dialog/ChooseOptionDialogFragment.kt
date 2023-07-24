@@ -2,7 +2,6 @@ package com.example.quizgame.ui.dialog
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.quizgame.R
 import com.example.quizgame.databinding.DialogChooseOptionBinding

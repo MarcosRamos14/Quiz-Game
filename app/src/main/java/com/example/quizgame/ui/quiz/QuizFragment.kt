@@ -50,7 +50,6 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
                     getQuestion()
                     clearAnswerState()
                 }
-
             }
         }
     }

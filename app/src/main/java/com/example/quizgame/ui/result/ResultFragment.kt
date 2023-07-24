@@ -40,7 +40,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         with(binding) {
             btnConclude.setOnClickListener {
                 viewModel.resetGame()
-                findNavController().navigate(R.id.action_resultFragment_to_saveGameDialogFragment)
+                findNavController().popBackStack(R.id.homeFragment, false)
             }
             btnRestart.setOnClickListener {
                 viewModel.resetGame()
