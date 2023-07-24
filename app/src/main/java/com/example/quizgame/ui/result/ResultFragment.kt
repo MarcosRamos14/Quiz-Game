@@ -16,18 +16,19 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
     private lateinit var binding: FragmentResultBinding
     private val viewModel: QuizViewModel by viewModels()
-    private val args: ResultFragmentArgs by navArgs()
+    private val args by navArgs<ResultFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentResultBinding.bind(view)
-        setView()
+        val resultViewArgs = args.resultViewArgs
+        setView(resultViewArgs)
         setListeners()
     }
 
-    private fun setView() {
-        val correctAnswers = args.correctAnswers
-        val incorrectAnswers = args.incorrectAnswers
+    private fun setView(resultViewArgs: ResultViewArgs) {
+        val correctAnswers = resultViewArgs.correctAnswers
+        val incorrectAnswers = resultViewArgs.incorrectAnswers
 
         with(binding) {
             textResultHits.text = getString(R.string.result_text_total_hits, correctAnswers)
@@ -39,7 +40,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
         with(binding) {
             btnConclude.setOnClickListener {
                 viewModel.resetGame()
-                findNavController().popBackStack(R.id.homeFragment, false)
+                findNavController().navigate(R.id.action_resultFragment_to_saveGameDialogFragment)
             }
             btnRestart.setOnClickListener {
                 viewModel.resetGame()

@@ -24,5 +24,5 @@ object DatabaseModule {
     ).build()
 
     @Provides
-    fun provideAnswerDao(appDatabase: AppDatabase) = appDatabase.gameDao()
+    fun provideGameDao(appDatabase: AppDatabase) = appDatabase.gameDao()
 }

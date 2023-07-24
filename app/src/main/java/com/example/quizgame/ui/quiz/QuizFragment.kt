@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.quizgame.R
 import com.example.quizgame.databinding.FragmentQuizBinding
+import com.example.quizgame.ui.result.ResultViewArgs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -98,11 +99,19 @@ class QuizFragment : Fragment(R.layout.fragment_quiz) {
     }
 
     private fun navigateToResultIfGameFinished() {
-        if (viewModel.isGameFinished.value == true) {
-            val correctAnswers = viewModel.getCorrectAnswersCount()
-            val incorrectAnswers = viewModel.getIncorrectAnswersCount()
-            val action = QuizFragmentDirections.actionQuizFragmentToResultFragment(correctAnswers, incorrectAnswers)
-            findNavController().navigate(action)
+        with(viewModel) {
+            if (isGameFinished.value == true) {
+                val correctAnswers = getCorrectAnswersCount()
+                val incorrectAnswers = getIncorrectAnswersCount()
+                val action = QuizFragmentDirections.
+                actionQuizFragmentToResultFragment(
+                    ResultViewArgs(
+                        correctAnswers = correctAnswers,
+                        incorrectAnswers = incorrectAnswers
+                    )
+                )
+                findNavController().navigate(action)
+            }
         }
     }
 

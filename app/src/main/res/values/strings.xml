@@ -33,8 +33,8 @@
     <!-- Result -->
     <string name="result_screen_title">Result</string>
     <string name="result_text_title">Game Result</string>
-    <string name="result_text_total_hits">Hits total hits were: %1$d</string>
-    <string name="result_text_total_errors">Your total errors were: %1$d</string>
+    <string name="result_text_total_hits">Your total hits: %1$d</string>
+    <string name="result_text_total_errors">Your total errors: %1$d</string>
     <string name="result_btn_restart">Restart game</string>
     <string name="result_btn_conclude">Finish Game</string>
 
