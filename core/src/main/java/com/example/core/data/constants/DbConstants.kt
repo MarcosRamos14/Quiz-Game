@@ -7,4 +7,5 @@ object DbConstants {
     const val QUIZ_COLUMN_INFO_ID = "id"
     const val QUIZ_COLUMN_INFO_PLAYER_NAME = "player_name"
     const val QUIZ_COLUMN_INFO_SCORE = "score"
+    const val QUIZ_COLUMN_INFO_POSITION = "position"
 }

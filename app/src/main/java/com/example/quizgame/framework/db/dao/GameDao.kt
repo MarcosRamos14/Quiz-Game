@@ -14,9 +14,6 @@ interface GameDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGame(gameEntity: GameEntity)
 
-    @Query("SELECT * FROM ${DbConstants.QUIZ_TABLE_NAME}")
+    @Query("SELECT * FROM ${DbConstants.QUIZ_TABLE_NAME} ORDER BY ${DbConstants.QUIZ_COLUMN_INFO_SCORE}")
     fun loadGame() : Flow<List<GameEntity>>
-
-    @Query("SELECT * FROM ${DbConstants.QUIZ_TABLE_NAME} WHERE id = :gameId")
-    suspend fun hasGame(gameId: Int) : GameEntity
 }

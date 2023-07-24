@@ -3,7 +3,6 @@ package com.example.quizgame.ui.quiz
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.quizgame.databinding.ItemQuizCounterBinding
-import com.example.quizgame.databinding.ItemQuizQuestionBinding
 
 class QuizCounterViewHolder(
     itemBinding: ItemQuizCounterBinding
